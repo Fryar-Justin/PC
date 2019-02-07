@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/PC.iml" filepath="$PROJECT_DIR$/.idea/PC.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ReportingApachePOI Combine Test/Reporting Apache POI/client-launcher/client-launcher.iml" filepath="$PROJECT_DIR$/ReportingApachePOI Combine Test/Reporting Apache POI/client-launcher/client-launcher.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ReportingApachePOI Combine Test/Reporting Apache POI/designer-launcher/designer-launcher.iml" filepath="$PROJECT_DIR$/ReportingApachePOI Combine Test/Reporting Apache POI/designer-launcher/designer-launcher.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ReportingApachePOI Combine Test/Reporting Apache POI/reporting-apache-poi-template.iml" filepath="$PROJECT_DIR$/ReportingApachePOI Combine Test/Reporting Apache POI/reporting-apache-poi-template.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ReportingApachePOI Combine Test/Reporting Apache POI/reporting-apache-poi-template-build/reporting-apache-poi-template-build.iml" filepath="$PROJECT_DIR$/ReportingApachePOI Combine Test/Reporting Apache POI/reporting-apache-poi-template-build/reporting-apache-poi-template-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ReportingApachePOI Combine Test/Reporting Apache POI/reporting-apache-poi-template-client/reporting-apache-poi-template-client.iml" filepath="$PROJECT_DIR$/ReportingApachePOI Combine Test/Reporting Apache POI/reporting-apache-poi-template-client/reporting-apache-poi-template-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ReportingApachePOI Combine Test/Reporting Apache POI/reporting-apache-poi-template-common/reporting-apache-poi-template-common.iml" filepath="$PROJECT_DIR$/ReportingApachePOI Combine Test/Reporting Apache POI/reporting-apache-poi-template-common/reporting-apache-poi-template-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ReportingApachePOI Combine Test/Reporting Apache POI/reporting-apache-poi-template-designer/reporting-apache-poi-template-designer.iml" filepath="$PROJECT_DIR$/ReportingApachePOI Combine Test/Reporting Apache POI/reporting-apache-poi-template-designer/reporting-apache-poi-template-designer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ReportingApachePOI Combine Test/Reporting Apache POI/reporting-apache-poi-template-gateway/reporting-apache-poi-template-gateway.iml" filepath="$PROJECT_DIR$/ReportingApachePOI Combine Test/Reporting Apache POI/reporting-apache-poi-template-gateway/reporting-apache-poi-template-gateway.iml" />
     </modules>
   </component>
 </project>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="reporting-apache-poi-template-build" />
+        <module name="reporting-apache-poi-template-client" />
+        <module name="reporting-apache-poi-template-common" />
+        <module name="reporting-apache-poi-template-designer" />
+        <module name="reporting-apache-poi-template-gateway" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="client-launcher" target="1.5" />
+      <module name="designer-launcher" target="1.5" />
+      <module name="reporting-apache-poi-template" target="1.5" />
+      <module name="reporting-apache-poi-template-build" target="1.5" />
+      <module name="reporting-apache-poi-template-client" target="1.6" />
+      <module name="reporting-apache-poi-template-common" target="1.6" />
+      <module name="reporting-apache-poi-template-designer" target="1.6" />
+      <module name="reporting-apache-poi-template-gateway" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
