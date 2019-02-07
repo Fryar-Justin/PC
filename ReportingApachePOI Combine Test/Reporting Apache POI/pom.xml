@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.inductiveautomation.apachepoi</groupId>
+    <artifactId>reporting-apache-poi-template</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <name>Apache POI Reporting</name>
+    <description>Used to run Monthly Reporting for the State</description>
+    <properties>
+        <ignition-sdk-version>7.9.0-SNAPSHOT</ignition-sdk-version>
+    </properties>
+    <modules>
+        <module>reporting-apache-poi-template-build</module>
+        <module>reporting-apache-poi-template-client</module>
+        <module>reporting-apache-poi-template-common</module>
+        <module>reporting-apache-poi-template-designer</module>
+        <module>reporting-apache-poi-template-gateway</module>
+        <module>designer-launcher</module>
+        <module>client-launcher</module>
+    </modules>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>releases</id>
+            <url>https://nexus.inductiveautomation.com/repository/inductiveautomation-releases</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>snapshots</id>
+            <url>https://nexus.inductiveautomation.com/repository/inductiveautomation-snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <repositories>
+        <repository>
+            <id>releases</id>
+            <url>https://nexus.inductiveautomation.com/repository/inductiveautomation-releases</url>
+        </repository>
+
+        <repository>
+            <id>snapshots</id>
+            <url>https://nexus.inductiveautomation.com/repository/inductiveautomation-snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+
+        <repository>
+            <id>thirdparty</id>
+            <url>https://nexus.inductiveautomation.com/repository/inductiveautomation-thirdparty
+            </url>
+        </repository>
+    </repositories>
+
+</project>

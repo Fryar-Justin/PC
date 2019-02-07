@@ -1,0 +1,6 @@
+com\inductiveautomation\apachepoi\ObjectDatasetWrapper.class
+com\inductiveautomation\apachepoi\GatewayHook.class
+com\inductiveautomation\apachepoi\ExcelFunctions.class
+com\inductiveautomation\apachepoi\ObjectDatasetWrapper$Row.class
+com\inductiveautomation\apachepoi\RPCHandler.class
+com\inductiveautomation\apachepoi\ObjectDatasetWrapper$ResultsIterator.class

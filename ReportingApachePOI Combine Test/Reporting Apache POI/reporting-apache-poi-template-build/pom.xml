@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>reporting-apache-poi-template</artifactId>
+        <groupId>com.inductiveautomation.apachepoi</groupId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>reporting-apache-poi-template-build</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.inductiveautomation.apachepoi</groupId>
+            <artifactId>reporting-apache-poi-template-client</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.inductiveautomation.apachepoi</groupId>
+            <artifactId>reporting-apache-poi-template-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.inductiveautomation.apachepoi</groupId>
+            <artifactId>reporting-apache-poi-template-designer</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.inductiveautomation.apachepoi</groupId>
+            <artifactId>reporting-apache-poi-template-gateway</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.inductiveautomation.ignitionsdk</groupId>
+                <artifactId>ignition-maven-plugin</artifactId>
+                <version>1.0.9</version>
+
+                <executions>
+                    <execution>
+                        <id>modl</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>modl</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>post</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>modl</goal>
+                            <goal>post</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <projectScopes>
+                        <projectScope>
+                            <name>reporting-apache-poi-template-common</name>
+                            <scope>CG</scope>
+                        </projectScope>
+                        <projectScope>
+                            <name>reporting-apache-poi-template-designer</name>
+                            <scope>CD</scope>
+                        </projectScope>
+                        <projectScope>
+                            <name>reporting-apache-poi-template-client</name>
+                            <scope>C</scope>
+                        </projectScope>
+                        <projectScope>
+                            <name>reporting-apache-poi-template-gateway</name>
+                            <scope>G</scope>
+                        </projectScope>
+                    </projectScopes>
+
+                    <moduleId>com.inductiveautomation.apachepoi.reporting-apache-poi-template</moduleId>
+                    <moduleName>${project.parent.name}</moduleName>
+                    <moduleDescription>${project.description}</moduleDescription>
+                    <moduleVersion>1.2.1.2016030813</moduleVersion>
+                    <requiredIgnitionVersion>7.8.2</requiredIgnitionVersion>
+                    <requiredFrameworkVersion>7</requiredFrameworkVersion>
+
+                    <hooks>
+                        <hook>
+                            <scope>G</scope>
+                            <hookClass>com.inductiveautomation.apachepoi.GatewayHook</hookClass>
+                        </hook>
+                        <hook>
+                            <scope>D</scope>
+                            <hookClass>com.inductiveautomation.apachepoi.designer.DesignerHook</hookClass>
+                        </hook>
+                        <hook>
+                            <scope>C</scope>
+                            <hookClass>com.inductiveautomation.apachepoi.client.ClientHook</hookClass>
+                        </hook>
+                    </hooks>
+
+                    <depends>
+                        <depend>
+                            <scope>G</scope>
+                            <moduleId>rept</moduleId>
+                        </depend>
+                    </depends>
+
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
