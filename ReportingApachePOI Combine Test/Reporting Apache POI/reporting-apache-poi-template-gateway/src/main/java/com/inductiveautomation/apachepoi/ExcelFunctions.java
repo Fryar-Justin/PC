@@ -210,52 +210,34 @@ public class ExcelFunctions {
             Integer rowIdx = 11 + (day - 1);
 
             sheet.getRow(rowIdx).getCell(0).setCellValue(excelShortDateFormat.format(t_stamp));
-            if(fourAMTurb == null)
-            {
+            if(fourAMTurb == null) {
                 sheet.getRow(rowIdx).getCell(2).setCellValue("PO");
-            }
-            else
-            {
+            } else {
                 sheet.getRow(rowIdx).getCell(2).setCellValue(fourAMTurb);
             }
-            if(eightAMTurb == null)
-            {
+            if(eightAMTurb == null) {
                 sheet.getRow(rowIdx).getCell(3).setCellValue("PO");
-            }
-            else
-            {
+            } else {
                 sheet.getRow(rowIdx).getCell(3).setCellValue(eightAMTurb);
             }
-            if(twelvePMTurb == null)
-            {
+            if(twelvePMTurb == null) {
                 sheet.getRow(rowIdx).getCell(4).setCellValue("PO");
-            }
-            else
-            {
+            } else {
                 sheet.getRow(rowIdx).getCell(4).setCellValue(twelvePMTurb);
             }
-            if(fourPMTurb == null)
-            {
+            if(fourPMTurb == null) {
                 sheet.getRow(rowIdx).getCell(5).setCellValue("PO");
-            }
-            else
-            {
+            } else {
                 sheet.getRow(rowIdx).getCell(5).setCellValue(fourPMTurb);
             }
-            if(eightPMTurb == null)
-            {
+            if(eightPMTurb == null) {
                 sheet.getRow(rowIdx).getCell(6).setCellValue("PO");
-            }
-            else
-            {
+            } else {
                 sheet.getRow(rowIdx).getCell(6).setCellValue(eightPMTurb);
             }
-            if(twelveAMTurb == null)
-            {
+            if(twelveAMTurb == null) {
                 sheet.getRow(rowIdx).getCell(7).setCellValue("PO");
-            }
-            else
-            {
+            } else {
                 sheet.getRow(rowIdx).getCell(7).setCellValue(twelveAMTurb);
             }
 
@@ -297,8 +279,8 @@ public class ExcelFunctions {
         for (ObjectDatasetWrapper.Row row : WQData) {
 
             Date t_stamp = (Date) row.getKeyValue("t_stamp");
-            Integer ToSystem = (Integer) row.getKeyValue("Valve_Closed");
-            Double Turb = (Double) row.getKeyValue("PRKM_Turb");
+            Integer ToSystem = (Integer) row.getKeyValue("Valve_Closed", 0);
+            Double Turb = (Double) row.getKeyValue("PRKM_Turb", 0.0);
             cal.setTime(t_stamp);
             Integer day = cal.get(Calendar.DAY_OF_MONTH);
             Integer rowIdx = 12 + (day - 1);
@@ -724,10 +706,10 @@ public class ExcelFunctions {
         for (ObjectDatasetWrapper.Row row : fiveMinData) {
             //Load Values from the tables
             Date t_stamp = (Date) row.getKeyValue("t_stamp");
-            Double cl2Res = (Double) row.getKeyValue("jssd_eff_cl2");
-            Double flow = (Double) row.getKeyValue("jssd_eff_flow");
-            Double waterTemp = (Double) row.getKeyValue("jssd_inf_water_temp");
-            Double level = (Double) row.getKeyValue("jssd_fw_level");
+            Double cl2Res = (Double) row.getKeyValue("jssd_eff_cl2", -1.0);
+            Double flow = (Double) row.getKeyValue("jssd_eff_flow", -1);
+            Double waterTemp = (Double) row.getKeyValue("jssd_inf_water_temp", -1.0);
+            Double level = (Double) row.getKeyValue("jssd_fw_level", -1);
             Double waterTempF = waterTemp * 1.8 + 32;
             Double pmPH = (Double) row.getKeyValue("jssd_ph");
 
@@ -799,7 +781,7 @@ public class ExcelFunctions {
             Calendar c = Calendar.getInstance();
             c.setTime(t_stamp);
             int day = c.get(Calendar.DAY_OF_MONTH);
-            Double runTime = (Double) row.getKeyValue("PRKM_ToSystem_Hours");
+            Double runTime = (Double) row.getKeyValue("PRKM_ToSystem_Hours", -1.0);
             sheet.getRow(rowIdx+day).getCell(2).setCellValue(runTime);
         }
         rowIdx = 9;
@@ -808,7 +790,7 @@ public class ExcelFunctions {
             Calendar c = Calendar.getInstance();
             c.setTime(t_stamp);
             int day = c.get(Calendar.DAY_OF_MONTH);
-            Double total = (Double) row.getKeyValue("WEL_PRKM_PM_Daily");
+            Double total = (Double) row.getKeyValue("WEL_PRKM_PM_Daily", 0.0);
             sheet.getRow(rowIdx+day).getCell(4).setCellValue(total / 1000);
         }
         rowIdx = 9;
@@ -817,7 +799,7 @@ public class ExcelFunctions {
             Calendar c = Calendar.getInstance();
             c.setTime(t_stamp);
             int day =  c.get(Calendar.DAY_OF_MONTH);
-            Double minRed = (Double) row.getKeyValue("minRed");
+            Double minRed = (Double) row.getKeyValue("minRed", 999.0);
             Date minTime = (Date) row.getKeyValue("minTime");
             Double minFlow = (Double) row.getKeyValue("minFlow");
             Double minUVT = (Double) row.getKeyValue("minUVT");
@@ -842,7 +824,7 @@ public class ExcelFunctions {
             Calendar c = Calendar.getInstance();
             c.setTime(t_stamp);
             int day =  c.get(Calendar.DAY_OF_MONTH);
-            Double offSpecFlow = (Double) row.getKeyValue("OffSpecFlow");
+            Double offSpecFlow = (Double) row.getKeyValue("OffSpecFlow", -1.0);
             sheet.getRow(rowIdx+day).getCell(19).setCellValue(offSpecFlow *1000 / 1000000);
 
         }
@@ -878,14 +860,14 @@ public class ExcelFunctions {
 
         double totalHours = 0;
         for (ObjectDatasetWrapper.Row row : runHours) {
-            Double runTime = (Double) row.getKeyValue("PRKM_ToSystem_Hours");
+            Double runTime = (Double) row.getKeyValue("PRKM_ToSystem_Hours", 0);
             totalHours += runTime;
         }
         sheet.getRow(9).getCell(3).setCellValue(totalHours);
 
         double totalFlow = 0;
         for (ObjectDatasetWrapper.Row row : totalProd) {
-            Double total = (Double) row.getKeyValue("WEL_PRKM_PM_Daily");
+            Double total = (Double) row.getKeyValue("WEL_PRKM_PM_Daily", 0);
             totalFlow += total;
         }
         sheet.getRow(9).getCell(5).setCellValue(totalFlow *1000/1000000);
@@ -893,8 +875,8 @@ public class ExcelFunctions {
         int offSpecEvents = 0;
         totalFlow = 0;
         for (ObjectDatasetWrapper.Row row: offSpecData){
-            Double events = (Double) row.getKeyValue("OffSpecEvents");
-            Double flow = (Double) row.getKeyValue("OffSpecFlow");
+            Double events = (Double) row.getKeyValue("OffSpecEvents", 0);
+            Double flow = (Double) row.getKeyValue("OffSpecFlow", 0);
             offSpecEvents += events;
             totalFlow += flow;
         }
@@ -937,8 +919,8 @@ public class ExcelFunctions {
             Date t_stamp = (Date) row.getKeyValue("t_stamp");
             Calendar c = Calendar.getInstance();
             c.setTime(t_stamp);
-            Integer timeMins = (Integer) row.getKeyValue("timeMins");
-            Double offSpecFlow = (Double) row.getKeyValue("volume");
+            Integer timeMins = (Integer) row.getKeyValue("timeMins", -1);
+            Double offSpecFlow = (Double) row.getKeyValue("volume", -1);
             sheet.getRow(rowIdx).getCell(1).setCellValue(excelShortDateFormat.format(t_stamp));
             sheet.getRow(rowIdx).getCell(2).setCellValue(hoursMinsSecs.format(t_stamp));
             sheet.getRow(rowIdx).getCell(9).setCellValue(timeMins);
@@ -1036,6 +1018,7 @@ public class ExcelFunctions {
         Integer month = cal.get(Calendar.MONTH) +1;
         Integer year = cal.get(Calendar.YEAR);
 
+        //Ogden Summary Sheet
         Ogden_EPA_Summary(operationalData, wb, month, year);
 
         //Ogden Operational Sheet
@@ -1095,16 +1078,16 @@ public class ExcelFunctions {
         double SpiroTot3 = 0;
         int test = 13;
         for (ObjectDatasetWrapper.Row row : groundWaterData) {
-            double MDSCTotalFlow = (double) row.getKeyValue("MDSCTotalFlow");
-            double MDSCTankLevel = (double) row.getKeyValue("MDSCTankLevel");
-            double PRKMTotalFlow = (double) row.getKeyValue("PRKMTotalFlow");
-            double PRKMTankLevel = (double) row.getKeyValue("PRKMTankLevel");
-            double DIVTotalFlow = (double) row.getKeyValue("DIVTotalFlow");
-            double DIVTankLevel = (double) row.getKeyValue("DIVTankLevel");
-            double SpiroFilter1TotalFlow = (double) row.getKeyValue("SpiroFilter1TotalFlow");
-            double SpiroFilter2TotalFlow = (double) row.getKeyValue("SpiroFilter2TotalFlow");
-            double SpiroFilter3TotalFlow = (double) row.getKeyValue("SpiroFilter3TotalFlow");
-            double SpiroTankLevel = (double) row.getKeyValue("SpiroTankLevel");
+            double MDSCTotalFlow = (double) row.getKeyValue("MDSCTotalFlow", 0.0);
+            double MDSCTankLevel = (double) row.getKeyValue("MDSCTankLevel", 0.0);
+            double PRKMTotalFlow = (double) row.getKeyValue("PRKMTotalFlow", 0.0);
+            double PRKMTankLevel = (double) row.getKeyValue("PRKMTankLevel", 0.0);
+            double DIVTotalFlow = (double) row.getKeyValue("DIVTotalFlow", 0.0);
+            double DIVTankLevel = (double) row.getKeyValue("DIVTankLevel", 0.0);
+            double SpiroFilter1TotalFlow = (double) row.getKeyValue("SpiroFilter1TotalFlow", 0.0);
+            double SpiroFilter2TotalFlow = (double) row.getKeyValue("SpiroFilter2TotalFlow", 0.0);
+            double SpiroFilter3TotalFlow = (double) row.getKeyValue("SpiroFilter3TotalFlow", 0.0);
+            double SpiroTankLevel = (double) row.getKeyValue("SpiroTankLevel", 0.0);
 
             if(firstLoop)
             {
@@ -1171,10 +1154,10 @@ public class ExcelFunctions {
         double MDSCLog = 0, PRKMLog = 0, DIVLog = 0, SpiroLog = 0;
         boolean fLoop = true;
         for (ObjectDatasetWrapper.Row row : hypoSpeed) {
-            double MDSCHypoSpeed = (double) row.getKeyValue("MDSCHypoSpeed");
-            double PRKMHypoSpeed = (double) row.getKeyValue("PRKMHypoSpeed");
-            double DIVHypoSpeed = (double) row.getKeyValue("DIVHypoSpeed");
-            double SpiroHypoSpeed = (double) row.getKeyValue("SpiroHypoSpeed");
+            double MDSCHypoSpeed = (double) row.getKeyValue("MDSCHypoSpeed", 0.0);
+            double PRKMHypoSpeed = (double) row.getKeyValue("PRKMHypoSpeed", 0.0);
+            double DIVHypoSpeed = (double) row.getKeyValue("DIVHypoSpeed", 0.0);
+            double SpiroHypoSpeed = (double) row.getKeyValue("SpiroHypoSpeed", 0.0);
             Date t_stamp = (Date) row.getKeyValue("t_stamp");
             cal.setTime(t_stamp);
             day = cal.get(Calendar.DAY_OF_MONTH);
@@ -1335,15 +1318,15 @@ public class ExcelFunctions {
         double SpiroTot3 = 0;
         int test = 13;
         for (ObjectDatasetWrapper.Row row : groundWaterData) {
-            double MDSCTotalFlow = (double) row.getKeyValue("MDSCTotalFlow");
-            double MDSCTankLevel = (double) row.getKeyValue("MDSCTankLevel");
+            double MDSCTotalFlow = (double) row.getKeyValue("MDSCTotalFlow", 0.0);
+            double MDSCTankLevel = (double) row.getKeyValue("MDSCTankLevel", 0.0);
 //            double PRKMTankLevel = (double) row.getKeyValue("PRKMTankLevel");
-            double DIVTotalFlow = (double) row.getKeyValue("DIVTotalFlow");
-            double DIVTankLevel = (double) row.getKeyValue("DIVTankLevel");
-            double SpiroFilter1TotalFlow = (double) row.getKeyValue("SpiroFilter1TotalFlow");
-            double SpiroFilter2TotalFlow = (double) row.getKeyValue("SpiroFilter2TotalFlow");
-            double SpiroFilter3TotalFlow = (double) row.getKeyValue("SpiroFilter3TotalFlow");
-            double SpiroTankLevel = (double) row.getKeyValue("SpiroTankLevel");
+            double DIVTotalFlow = (double) row.getKeyValue("DIVTotalFlow", 0.0);
+            double DIVTankLevel = (double) row.getKeyValue("DIVTankLevel", 0.0);
+            double SpiroFilter1TotalFlow = (double) row.getKeyValue("SpiroFilter1TotalFlow", 0.0);
+            double SpiroFilter2TotalFlow = (double) row.getKeyValue("SpiroFilter2TotalFlow", 0.0);
+            double SpiroFilter3TotalFlow = (double) row.getKeyValue("SpiroFilter3TotalFlow", 0.0);
+            double SpiroTankLevel = (double) row.getKeyValue("SpiroTankLevel", 0.0);
 
             if(firstLoop)
             {
@@ -1403,10 +1386,10 @@ public class ExcelFunctions {
         double MDSCLog = 0, PRKMLog = 0, DIVLog = 0, SpiroLog = 0;
         boolean fLoop = true;
         for (ObjectDatasetWrapper.Row row : hypoSpeed) {
-            double MDSCHypoSpeed = (double) row.getKeyValue("MDSCHypoSpeed");
-            double PRKMHypoSpeed = (double) row.getKeyValue("PRKMHypoSpeed");
-            double DIVHypoSpeed = (double) row.getKeyValue("DIVHypoSpeed");
-            double SpiroHypoSpeed = (double) row.getKeyValue("SpiroHypoSpeed");
+            double MDSCHypoSpeed = (double) row.getKeyValue("MDSCHypoSpeed", 0.0);
+            double PRKMHypoSpeed = (double) row.getKeyValue("PRKMHypoSpeed", 0.0);
+            double DIVHypoSpeed = (double) row.getKeyValue("DIVHypoSpeed", 0.0);
+            double SpiroHypoSpeed = (double) row.getKeyValue("SpiroHypoSpeed", 0.0);
             Date t_stamp = (Date) row.getKeyValue("t_stamp");
             cal.setTime(t_stamp);
             day = cal.get(Calendar.DAY_OF_MONTH);
@@ -1548,10 +1531,10 @@ public class ExcelFunctions {
         sheet.getRow(1).getCell(2).setCellValue(year);
 
         for (ObjectDatasetWrapper.Row row : SewerFlows) {
-            double bootHill = (double) row.getKeyValue("BootHill");
-            double fairwayHills = (double) row.getKeyValue("FairwayHills");
-            double plateSettler = ((double) row.getKeyValue("Solids") / 1000);
-            double drainFlow = ((double) row.getKeyValue("Waste")/ 1000);
+            double bootHill = (double) row.getKeyValue("BootHill", 0.0);
+            double fairwayHills = (double) row.getKeyValue("FairwayHills", 0.0);
+            double plateSettler = ((double) row.getKeyValue("Solids", 0.0) / 1000);
+            double drainFlow = ((double) row.getKeyValue("Waste", 0.0)/ 1000);
 
             Date t_stamp = (Date) row.getKeyValue("t_stamp");
             cal.setTime(t_stamp);
@@ -1585,26 +1568,26 @@ public class ExcelFunctions {
         for(ObjectDatasetWrapper.Row row : production)
         {
             Date t_stamp = (Date) row.getKeyValue("t_stamp");
-            Double rawTurb = (Double) row.getKeyValue("rawTurb");
-            Double decantTurb = (Double) row.getKeyValue("decantTurb");
-            Double decantFlow = (Double) row.getKeyValue("decantFlow");
-            Double mfFeedTurb = (Double) row.getKeyValue("mfFeedTurb");
-            Double feedTemp = (Double) row.getKeyValue("feedTemp");
-            Double strainInPress = (Double) row.getKeyValue("strainInPress");
-            Double strainOutPress = (Double) row.getKeyValue("strainOutPress");
-            Double strainerDP = (Double) row.getKeyValue("strainerDp");
-            Double membraneFeedPress = (Double) row.getKeyValue("memFeedPress");
-            Double filtratePress = (Double) row.getKeyValue("filtratePress");
+            Double rawTurb = (Double) row.getKeyValue("rawTurb", 0.0);
+            Double decantTurb = (Double) row.getKeyValue("decantTurb", 0.0);
+            Double decantFlow = (Double) row.getKeyValue("decantFlow", 0.0);
+            Double mfFeedTurb = (Double) row.getKeyValue("mfFeedTurb", 0.0);
+            Double feedTemp = (Double) row.getKeyValue("feedTemp", 0.0);
+            Double strainInPress = (Double) row.getKeyValue("strainInPress", 0.0);
+            Double strainOutPress = (Double) row.getKeyValue("strainOutPress", 0.0);
+            Double strainerDP = (Double) row.getKeyValue("strainerDp", 0.0);
+            Double membraneFeedPress = (Double) row.getKeyValue("memFeedPress", 0.0);
+            Double filtratePress = (Double) row.getKeyValue("filtratePress", 0.0);
 
-            Double feedFlow = (Double) row.getKeyValue("feedFlow");
-            Double filtrateFlow = (Double) row.getKeyValue("filtrateFlow");
-            Double XRFlow = (Double) row.getKeyValue("XRFlow");
-            Double plantRecoveryToday = (Double) row.getKeyValue("plantRecoveryToday");
-            Double combinedFiltrateTurb = (Double) row.getKeyValue("combinedFiltrateTurb");
-            Double clearWellLevel = (Double) row.getKeyValue("clearWellLevel");
-            Double feedVolume = (Double) row.getKeyValue("feedVolume");
-            Double strainerBackwashVolume = (Double) row.getKeyValue("strainerBackwashVolume");
-            Double netFiltrateVolume = (Double) row.getKeyValue("netFiltrateVolume");
+            Double feedFlow = (Double) row.getKeyValue("feedFlow", 0.0);
+            Double filtrateFlow = (Double) row.getKeyValue("filtrateFlow", 0.0);
+            Double XRFlow = (Double) row.getKeyValue("XRFlow", 0.0);
+            Double plantRecoveryToday = (Double) row.getKeyValue("plantRecoveryToday", 0.0);
+            Double combinedFiltrateTurb = (Double) row.getKeyValue("combinedFiltrateTurb", 0.0);
+            Double clearWellLevel = (Double) row.getKeyValue("clearWellLevel", 0.0);
+            Double feedVolume = (Double) row.getKeyValue("feedVolume", 0.0);
+            Double strainerBackwashVolume = (Double) row.getKeyValue("strainerBackwashVolume", 0.0);
+            Double netFiltrateVolume = (Double) row.getKeyValue("netFiltrateVolume", 0.0);
 
             Calendar cal = Calendar.getInstance();
             cal.setTime(t_stamp);
@@ -1670,25 +1653,25 @@ public class ExcelFunctions {
         for(ObjectDatasetWrapper.Row row : production)
         {
             Date t_stamp = (Date) row.getKeyValue("t_stamp");
-            Double rawTurb = (Double) row.getKeyValue("rawWaterTurb");
-            Double decantTurb = (Double) row.getKeyValue("decantTurb");
-            Double decantFlow = (Double) row.getKeyValue("decantFlow");
-            Double mfFeedTurb = (Double) row.getKeyValue("MFTurb");
-            Double feedTemp = (Double) row.getKeyValue("feedTemp");
-            Double strainInPress = (Double) row.getKeyValue("strainerInletPress");
-            Double strainOutPress = (Double) row.getKeyValue("strainerOutletPress");
-            Double strainerDP = (Double) row.getKeyValue("strainerDP");
-            Double membraneFeedPress = (Double) row.getKeyValue("membraneFeedPress");
-            Double filtratePress = (Double) row.getKeyValue("filtratePress");
-            Double feedFlow = (Double) row.getKeyValue("feedFlow");
-            Double filtrateFlow = (Double) row.getKeyValue("filtFlow");
-            Double XRFlow = (Double) row.getKeyValue("XRFlow");
-            Double plantRecoveryToday = (Double) row.getKeyValue("plantRecovery");
-            Double combinedFiltrateTurb = (Double) row.getKeyValue("combinedFiltTurb");
-            Double clearWellLevel = (Double) row.getKeyValue("clearWellLevel");
-            Double feedVolume = (Double) row.getKeyValue("feedVolumeGal");
-            Double strainerBackwashVolume = (Double) row.getKeyValue("strainerBackwashVol");
-            Double netFiltrateVolume = (Double) row.getKeyValue("netFiltrateVol");
+            Double rawTurb = (Double) row.getKeyValue("rawWaterTurb", 0.0);
+            Double decantTurb = (Double) row.getKeyValue("decantTurb", 0.0);
+            Double decantFlow = (Double) row.getKeyValue("decantFlow", 0.0);
+            Double mfFeedTurb = (Double) row.getKeyValue("MFTurb", 0.0);
+            Double feedTemp = (Double) row.getKeyValue("feedTemp", 0.0);
+            Double strainInPress = (Double) row.getKeyValue("strainerInletPress", 0.0);
+            Double strainOutPress = (Double) row.getKeyValue("strainerOutletPress", 0.0);
+            Double strainerDP = (Double) row.getKeyValue("strainerDP", 0.0);
+            Double membraneFeedPress = (Double) row.getKeyValue("membraneFeedPress", 0.0);
+            Double filtratePress = (Double) row.getKeyValue("filtratePress", 0.0);
+            Double feedFlow = (Double) row.getKeyValue("feedFlow", 0.0);
+            Double filtrateFlow = (Double) row.getKeyValue("filtFlow", 0.0);
+            Double XRFlow = (Double) row.getKeyValue("XRFlow", 0.0);
+            Double plantRecoveryToday = (Double) row.getKeyValue("plantRecovery", 0.0);
+            Double combinedFiltrateTurb = (Double) row.getKeyValue("combinedFiltTurb", 0.0);
+            Double clearWellLevel = (Double) row.getKeyValue("clearWellLevel", 0.0);
+            Double feedVolume = (Double) row.getKeyValue("feedVolumeGal", 0.0);
+            Double strainerBackwashVolume = (Double) row.getKeyValue("strainerBackwashVol", 0.0);
+            Double netFiltrateVolume = (Double) row.getKeyValue("netFiltrateVol", 0.0);
 
             Calendar cal = Calendar.getInstance();
             cal.setTime(t_stamp);
@@ -1736,23 +1719,23 @@ public class ExcelFunctions {
         {
             Date t_stamp = (Date) row.getKeyValue("t_stamp");
 //            Double rawTurb = (Double) row.getKeyValue("rawWaterTurb");
-            Integer rackProcess = (Integer) row.getKeyValue("rackProc");
-            Integer rackSequence = (Integer) row.getKeyValue("rackStep");
-            Double feedPressure = (Double) row.getKeyValue("feedPress");
-            Double feedTemp = (Double) row.getKeyValue("feedTemp");
-            Double filtTurb = (Double) row.getKeyValue("filtTurbidity");
-            Double tmp = (Double) row.getKeyValue("TMP");
-            Double filtPress = (Double) row.getKeyValue("filtPress");
-            Double feedFlow = (Double) row.getKeyValue("feedFlow");
-            Double xrFlow = (Double) row.getKeyValue("XRFlow");
-            Double filtFlow = (Double) row.getKeyValue("filtFlow");
-            Double rackVolToday = (Double) row.getKeyValue("rackVolToday");
-            Double rackWasteToday = (Double) row.getKeyValue("rackWasteToday");
-            Double rackRecToday = (Double) row.getKeyValue("rackRecToday");
-            Double rackFlux = (Double) row.getKeyValue("rackFlux");
-            Double rackSpecFlux = (Double) row.getKeyValue("rackSpecFlux");
-            Double rackLRV = (Double) row.getKeyValue("rackLRV");
-            Double rackFiltTime = (Double) row.getKeyValue("rackFiltTime");
+            Integer rackProcess = (Integer) row.getKeyValue("rackProc", 0);
+            Integer rackSequence = (Integer) row.getKeyValue("rackStep", 0);
+            Double feedPressure = (Double) row.getKeyValue("feedPress", 0.0);
+            Double feedTemp = (Double) row.getKeyValue("feedTemp", 0.0);
+            Double filtTurb = (Double) row.getKeyValue("filtTurbidity", 0.0);
+            Double tmp = (Double) row.getKeyValue("TMP", 0.0);
+            Double filtPress = (Double) row.getKeyValue("filtPress", 0.0);
+            Double feedFlow = (Double) row.getKeyValue("feedFlow", 0.0);
+            Double xrFlow = (Double) row.getKeyValue("XRFlow", 0.0);
+            Double filtFlow = (Double) row.getKeyValue("filtFlow", 0.0);
+            Double rackVolToday = (Double) row.getKeyValue("rackVolToday", 0.0);
+            Double rackWasteToday = (Double) row.getKeyValue("rackWasteToday", 0.0);
+            Double rackRecToday = (Double) row.getKeyValue("rackRecToday", 0.0);
+            Double rackFlux = (Double) row.getKeyValue("rackFlux", 0.0);
+            Double rackSpecFlux = (Double) row.getKeyValue("rackSpecFlux", 0.0);
+            Double rackLRV = (Double) row.getKeyValue("rackLRV", 0.0);
+            Double rackFiltTime = (Double) row.getKeyValue("rackFiltTime", 0.0);
 
             Calendar cal = Calendar.getInstance();
             cal.setTime(t_stamp);
@@ -1794,14 +1777,14 @@ public class ExcelFunctions {
         prevDay = 0;
 //
         for(ObjectDatasetWrapper.Row row : IT_data) {
-            String date = (String) row.getKeyValue("DATE");
-            String time = (String) row.getKeyValue("TIME");
+            String date = (String) row.getKeyValue("DATE", "NULL");
+            String time = (String) row.getKeyValue("TIME", "NULL");
             Date timestamp = (Date) row.getKeyValue("TIMESTAMP");
-            Double testTime = (Double) row.getKeyValue("TESTTIME");
-            Double startPSI = (Double) row.getKeyValue("PRESSATSTART");
-            Double endPSI = (Double) row.getKeyValue("PRESSATEND");
-            Double decayPSI = (Double) row.getKeyValue("PRESSCHANGE");
-            String passFail = (String) row.getKeyValue("PASSFAIL");
+            Double testTime = (Double) row.getKeyValue("TESTTIME", 0.0);
+            Double startPSI = (Double) row.getKeyValue("PRESSATSTART", 0.0);
+            Double endPSI = (Double) row.getKeyValue("PRESSATEND", 0.0);
+            Double decayPSI = (Double) row.getKeyValue("PRESSCHANGE", 0.0);
+            String passFail = (String) row.getKeyValue("PASSFAIL", "NULL");
 ////
             Calendar cal = Calendar.getInstance();
             cal.setTime(timestamp);
@@ -1854,7 +1837,7 @@ public class ExcelFunctions {
             int entryDay = entryCal.get(Calendar.DAY_OF_MONTH);
 
             Date rackTS = (Date) row.getKeyValue("Rack" + rack_number + "TS");
-            String rackResult = (String) row.getKeyValue("Rack" + rack_number + "Result");
+            String rackResult = (String) row.getKeyValue("Rack" + rack_number + "Result", "NULL");
             cal.setTime(rackTS);
             //Get the hour and day that this check was ran
             Integer rackTSDAY = cal.get(Calendar.DAY_OF_MONTH);
@@ -1877,8 +1860,8 @@ public class ExcelFunctions {
                     //Check to see if there is a time stamp in FiveMin that matches our Rack table in days, hours and minutes
                     //Check the day to make sure the flow never went below 100
                     if (fiveMinDay.equals(rackTSDAY)) {
-                        Double fairwayFlow = (Double) five_Row.getKeyValue("FI0510_Fairway");
-                        Double boothillFlow = (Double) five_Row.getKeyValue("FI0520_BootHill");
+                        Double fairwayFlow = (Double) five_Row.getKeyValue("FI0510_Fairway", 0.0);
+                        Double boothillFlow = (Double) five_Row.getKeyValue("FI0520_BootHill", 0.0);
                         //Grab the two flow values and check if they are above the minimum required to validate the rackResult
                         if (fairwayFlow + boothillFlow > MINFLOW) {
                             flowOkay = true;
@@ -1924,7 +1907,7 @@ public class ExcelFunctions {
 
         //POE min residual disinfectant residual criteria
         for (ObjectDatasetWrapper.Row row : FiveMinData) {
-            Double CL2 = (Double) row.getKeyValue((String) parameters.get("cl2_column"));
+            Double CL2 = (Double) row.getKeyValue((String) parameters.get("cl2_column"), 0.0);
             Date t_stamp = (Date) row.getKeyValue((String) parameters.get("date"));
             Double fairwayFlow = (Double) row.getKeyValue("FI0510_Fairway", 0.0);
             Double boothillFlow = (Double) row.getKeyValue("FI0520_Boothill", 0.0);
@@ -2011,7 +1994,7 @@ public class ExcelFunctions {
 
         //POE min residual disinfectant residual criteria
         for (ObjectDatasetWrapper.Row row : FiveMinData) {
-            Double CL2 = (Double) row.getKeyValue((String) parameters.get("cl2_column"));
+            Double CL2 = (Double) row.getKeyValue((String) parameters.get("cl2_column"), 0.0);
             Date t_stamp = (Date) row.getKeyValue((String) parameters.get("date"));
             Double divide = (Double) row.getKeyValue("DIVD_Flow", 0.0);
             Double parkmeadow = (Double) row.getKeyValue("PRKM_Flow", 0.0);
@@ -2249,7 +2232,7 @@ public class ExcelFunctions {
 
         for (ObjectDatasetWrapper.Row row : Hours) {
             Date t_stamp = (Date) row.getKeyValue("t_stamp");
-            Double hour = (Double) row.getKeyValue("PRKM_ToSystem_Hours");
+            Double hour = (Double) row.getKeyValue("PRKM_ToSystem_Hours", 0.0);
             cal.setTime(t_stamp);
             Integer day = cal.get(Calendar.DAY_OF_MONTH);
             Integer rowIdx = 14 + (day - 1);
@@ -2274,12 +2257,12 @@ public class ExcelFunctions {
         for (ObjectDatasetWrapper.Row row : FiveMinData) {
             //Load Values from the tables
             Date t_stamp = (Date) row.getKeyValue((String) op_params.get("date"));
-            Double cl2Res = (Double) row.getKeyValue((String) op_params.get("cl2_column"));
+            Double cl2Res = (Double) row.getKeyValue((String) op_params.get("cl2_column"), -1.0);
             Double pmFlow = (Double) row.getKeyValue((String) op_params.get("flow1"));
             Double dvFlow = (Double) row.getKeyValue((String) op_params.get("flow2"));
-            Double waterTemp = (Double) row.getKeyValue((String) op_params.get("water_temp"));
+            Double waterTemp = (Double) row.getKeyValue((String) op_params.get("water_temp"), -1.0);
             Double waterTempF = waterTemp * 1.8 + 32;
-            Double pmPH = (Double) row.getKeyValue((String) op_params.get("PRKM_pH"));
+            Double pmPH = (Double) row.getKeyValue((String) op_params.get("PRKM_pH"), 0.0);
 
             if(pmFlow != null && dvFlow != null) {
                 //Offsets for storing in the correct area
@@ -2328,12 +2311,12 @@ public class ExcelFunctions {
         for (ObjectDatasetWrapper.Row row : FiveMinData) {
             //Load Values from the tables
             Date t_stamp = (Date) row.getKeyValue((String) op_params.get("date"));
-            Double cl2Res = (Double) row.getKeyValue((String) op_params.get("cl2_column"));
+            Double cl2Res = (Double) row.getKeyValue((String) op_params.get("cl2_column"), -1.0);
             Double fairwayFlow = (Double) row.getKeyValue((String) op_params.get("flow1"));
             Double boothillFlow = (Double) row.getKeyValue((String) op_params.get("flow2"));
-            Double waterTemp = (Double) row.getKeyValue((String) op_params.get("water_temp"));
-            Double clearwellLevel = (Double) row.getKeyValue((String) op_params.get("clearwell_level"));
-            Integer plantRunning = (Integer) row.getKeyValue((String) op_params.get("plant_running"));
+            Double waterTemp = (Double) row.getKeyValue((String) op_params.get("water_temp"), -1.0);
+            Double clearwellLevel = (Double) row.getKeyValue((String) op_params.get("clearwell_level"), -1.0);
+            Integer plantRunning = (Integer) row.getKeyValue((String) op_params.get("plant_running"), -1);
             Integer numTrainsOnline = (Integer) row.getKeyValue((String) op_params.get("num_trains_online"));
 
             if(fairwayFlow != null && boothillFlow != null) {
@@ -2390,12 +2373,12 @@ public class ExcelFunctions {
         for (ObjectDatasetWrapper.Row row : FiveMinData) {
             //Load Values from the tables
             Date t_stamp = (Date) row.getKeyValue((String) op_params.get("date"));
-            Double cl2Res = (Double) row.getKeyValue((String) op_params.get("cl2_column"));
+            Double cl2Res = (Double) row.getKeyValue((String) op_params.get("cl2_column"), -1.0);
             Double fairwayFlow = (Double) row.getKeyValue((String) op_params.get("flow1"));
             Double boothillFlow = (Double) row.getKeyValue((String) op_params.get("flow2"));
-            Double waterTemp = (Double) row.getKeyValue((String) op_params.get("water_temp"));
-            Double clearwellLevel = (Double) row.getKeyValue((String) op_params.get("clearwell_level"));
-            Integer plantRunning = (Integer) row.getKeyValue((String) op_params.get("plant_running"));
+            Double waterTemp = (Double) row.getKeyValue((String) op_params.get("water_temp"), 0.0);
+            Double clearwellLevel = (Double) row.getKeyValue((String) op_params.get("clearwell_level"), 0.0);
+            Integer plantRunning = (Integer) row.getKeyValue((String) op_params.get("plant_running"), 0);
 
             if(fairwayFlow != null && boothillFlow != null) {
                 //Offsets for storing in the correct area
@@ -2582,9 +2565,9 @@ public class ExcelFunctions {
         for (ObjectDatasetWrapper.Row row : operationalData) {
             //Load Values from the tables
             Date t_stamp = (Date) row.getKeyValue("t_stamp");
-            Double cl2Res = (Double) row.getKeyValue("Chlorine_Res");
-            Double op_flow = (Double) row.getKeyValue("Op_Flow");
-            Double waterTemp = (Double) row.getKeyValue("Op_Temp");
+            Double cl2Res = (Double) row.getKeyValue("Chlorine_Res", -1.0);
+            Double op_flow = (Double) row.getKeyValue("Op_Flow", -1.0);
+            Double waterTemp = (Double) row.getKeyValue("Op_Temp", -1.0);
 
             //Offsets for storing in the correct area
             cal.setTime(t_stamp);
@@ -2623,7 +2606,7 @@ public class ExcelFunctions {
         final int PH_COLUMN = 4;
         int rowIdx = 16;
         for (ObjectDatasetWrapper.Row row : WQData) {
-            sheet.getRow(rowIdx).getCell(PH_COLUMN).setCellValue((Double) row.getKeyValue("Finished_Water_pH_Ave"));
+            sheet.getRow(rowIdx).getCell(PH_COLUMN).setCellValue((Double) row.getKeyValue("Finished_Water_pH_Ave", -1.0));
             rowIdx++;
         }
 
@@ -2678,11 +2661,6 @@ public class ExcelFunctions {
                 }
                 day = cur_day;
             }
-
-
-
-
-
         }
     }
 }
